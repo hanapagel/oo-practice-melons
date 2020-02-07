@@ -78,6 +78,37 @@ def make_melon_type_lookup(melon_types=make_melon_types()):
 # Part 2   #
 ############
 
+
+def process_melon_data(file_path):
+    '''Process melon data, instantiate melon objects for all melons harvested. '''
+
+    # Open and read data
+    harvest_log = open(file_path)
+
+    list_of_instance = []
+
+    for line in harvest_log:
+        line.rstrip()
+        line_list = line.split()
+        mel_type = line_list[5]
+        shape = line_list[1]
+        color = line_list[3]
+        field = line_list[11]
+        harvester = line_list[8]
+
+        list_of_instance.append([mel_type, shape, color, field, harvester])
+
+        list_of_objects = []
+
+    for instance in list_of_instance:
+        melon = Melon(instance[0], instance[1], instance[2], instance[3],
+                      instance[4])
+
+        list_of_objects.append(melon)
+
+    return list_of_objects
+        
+
 class Melon(object):
     """A melon in a melon harvest."""
 
@@ -90,6 +121,9 @@ class Melon(object):
 
     def is_sellable(self):
         return self.shape > 5 and self.color > 5 and self.field != 3
+
+
+
 
 
 def make_melons():
@@ -137,3 +171,5 @@ def get_sellability_report(melons=make_melons()):
         else:
             print((f'Harvested by {melon.harvester} from Field {melon.field}')
                   + " (NOT SELLABLE)")
+
+
